@@ -41,17 +41,22 @@
   .btn-outline:hover{background:rgba(0,212,255,.1);transform:translateY(-2px);}
 
   /* PHOTO */
-  .hero-photo{position:relative;flex-shrink:0;}
-  .photo-ring{width:240px;height:240px;border-radius:50%;padding:4px;background:linear-gradient(135deg,var(--accent),var(--accent2));animation:spin 8s linear infinite;}
-  @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-  .photo-inner{width:100%;height:100%;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
-  .photo-inner img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:none;}
+  .hero-photo{position:relative;flex-shrink:0;width:420px;height:500px;display:flex;align-items:flex-end;justify-content:center;}
+  .photo-blob{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:360px;height:440px;background:radial-gradient(ellipse at 60% 40%,rgba(124,58,237,.55) 0%,rgba(0,212,255,.25) 60%,transparent 80%);border-radius:60% 40% 50% 50%/60% 50% 60% 40%;z-index:0;}
+  .photo-blob-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:320px;height:400px;background:radial-gradient(ellipse,rgba(0,212,255,.12),transparent 70%);border-radius:50%;z-index:0;}
+  .photo-inner{position:relative;z-index:2;width:340px;height:460px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;cursor:pointer;}
+  .photo-inner img{width:100%;height:100%;object-fit:cover;object-position:top;display:none;border-radius:20px 20px 0 0;}
   .photo-inner img.loaded{display:block;}
-  .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:.8rem;text-align:center;padding:20px;cursor:pointer;transition:.3s;}
-  .photo-placeholder:hover{color:var(--accent);}
-  .photo-placeholder svg{width:48px;height:48px;opacity:.5;}
+  .photo-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:.85rem;text-align:center;padding:30px;width:100%;height:100%;border:2px dashed rgba(0,212,255,.3);border-radius:20px 20px 0 0;transition:.3s;background:rgba(0,212,255,.03);}
+  .photo-placeholder:hover{color:var(--accent);border-color:var(--accent);background:rgba(0,212,255,.07);}
+  .photo-placeholder svg{width:56px;height:56px;opacity:.4;}
   #photoInput{display:none;}
-  .photo-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.15),transparent 70%);z-index:-1;}
+  /* floating icons */
+  .ficon{position:absolute;background:rgba(15,22,41,.8);border:1px solid var(--border);border-radius:14px;padding:10px 14px;font-size:1.1rem;color:var(--accent);backdrop-filter:blur(8px);z-index:3;animation:float 3s ease-in-out infinite;}
+  .ficon:nth-child(1){top:40px;left:-10px;animation-delay:0s;}
+  .ficon:nth-child(2){top:160px;right:-10px;animation-delay:.8s;}
+  .ficon:nth-child(3){bottom:120px;left:-20px;animation-delay:1.5s;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
   /* SECTIONS */
   section{padding:80px 40px;max-width:1100px;margin:0 auto;}
@@ -161,17 +166,19 @@
       </div>
     </div>
     <div class="hero-photo">
-      <div class="photo-glow"></div>
-      <div class="photo-ring">
-        <div class="photo-inner" id="photoBox" onclick="document.getElementById('photoInput').click()">
-          <img id="photoImg" src="" alt="Lakshman Prabhu"/>
-          <div class="photo-placeholder" id="photoPlaceholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            <span>Click to upload photo</span>
-          </div>
+      <div class="photo-blob"></div>
+      <div class="photo-blob-glow"></div>
+      <span class="ficon">&lt;/&gt;</span>
+      <span class="ficon">🗄️</span>
+      <span class="ficon">☁️</span>
+      <div class="photo-inner" id="photoBox" onclick="document.getElementById('photoInput').click()">
+        <img id="photoImg" src="" alt="Lakshman Prabhu"/>
+        <div class="photo-placeholder" id="photoPlaceholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Click to upload your photo</span>
         </div>
       </div>
       <input type="file" id="photoInput" accept="image/*"/>
